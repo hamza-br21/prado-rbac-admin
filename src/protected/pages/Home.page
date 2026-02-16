@@ -1,0 +1,81 @@
+<com:TContent ID="MainContent">
+    <com:TForm>
+        <h1>Gestion des Utilisateurs</h1>
+
+        <!-- Search Section -->
+        <div class="actions">
+            Rechercher : 
+            <com:TTextBox ID="SearchText" />
+            <com:TButton Text="Rechercher" OnClick="onSearch" CausesValidation="false" />
+            <com:TButton Text="Tout Afficher" OnClick="onResetSearch" CausesValidation="false" />
+        </div>
+
+        <!-- User List -->
+        <com:TDataGrid ID="UserGrid" 
+                       AutoGenerateColumns="false" 
+                       CssClass="datagrid"
+                       DataKeyField="id"
+                       OnDeleteCommand="onDelete"
+                       OnEditCommand="onEdit">
+            
+            <com:TBoundColumn DataField="id" HeaderText="ID" ReadOnly="true" />
+            <com:TBoundColumn DataField="nom" HeaderText="Nom" />
+            <com:TBoundColumn DataField="email" HeaderText="Email" />
+            <com:TBoundColumn DataField="profile.label" HeaderText="Profile" />
+            
+            <com:TTemplateColumn HeaderText="Habilitations">
+                <prop:ItemTemplate>
+                    <%# $this->Page->getUserHabilitations($this->Parent->Data) %>
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+            
+            <com:TButtonColumn HeaderText="Actions"
+                               Text="Modifier"
+                               CommandName="edit"
+                               ButtonType="PushButton"
+                               CausesValidation="false" />
+            
+            <com:TTemplateColumn HeaderText="Supprimer">
+                <prop:ItemTemplate>
+                    <com:TButton Text="Supprimer" 
+                                 CommandName="delete"
+                                 Attributes.OnClick="if(!confirm('Êtes-vous sûr ?')) return false;"
+                                 CausesValidation="false" />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+        </com:TDataGrid>
+
+        <!-- Edit/Create Form -->
+        <div class="form-section">
+            <h3><com:TLabel ID="FormTitle" Text="Ajouter un utilisateur" /></h3>
+            
+            <com:THiddenField ID="UserId" />
+            
+            <div class="field">
+                <label>Nom :</label>
+                <com:TTextBox ID="UserNom" />
+                <com:TRequiredFieldValidator ControlToValidate="UserNom" ErrorMessage="Le nom est requis." />
+            </div>
+            
+            <div class="field">
+                <label>Email :</label>
+                <com:TTextBox ID="UserEmail" />
+                <com:TRequiredFieldValidator ControlToValidate="UserEmail" ErrorMessage="L'email est requis." />
+                <com:TEmailAddressValidator ControlToValidate="UserEmail" ErrorMessage="Email invalide." />
+            </div>
+
+            
+            <label>Profile :</label>
+             <com:TDropDownList ID="UserProfile" />
+
+            
+            <div class="actions">
+                <com:TButton ID="SaveBtn" Text="Enregistrer" OnClick="onSave" />
+                <com:TButton Text="Annuler" OnClick="onCancel" CausesValidation="false" />
+            </div>
+            
+            <com:TLabel ID="MessageLabel" ForeColor="red" />
+        </div>
+
+    </com:TForm>
+</com:TContent>

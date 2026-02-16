@@ -1,0 +1,79 @@
+
+
+CREATE TABLE IF NOT EXISTS profiles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    label VARCHAR(255) NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+INSERT INTO profiles (label, active) VALUES
+('Admin', TRUE),
+('Manager', TRUE),
+('User', TRUE);
+
+
+CREATE TABLE IF NOT EXISTS habilitations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    label VARCHAR(255) NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+
+INSERT INTO habilitations (label, active) VALUES
+('CREATE_USER', TRUE),
+('DELETE_USER', TRUE),
+('EDIT_USER', TRUE),
+('VIEW_USER', TRUE);
+
+
+
+
+CREATE TABLE IF NOT EXISTS profile_habilitation (
+    id_profile INT NOT NULL,
+    id_habilitation INT NOT NULL,
+    PRIMARY KEY (id_profile, id_habilitation),
+    FOREIGN KEY (id_profile) REFERENCES profiles(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_habilitation) REFERENCES habilitations(id) ON DELETE CASCADE
+);
+
+-- Manager peut voir et modifier
+-- Admin a tous les droits
+-- User peut seulement voir
+
+INSERT INTO profile_habilitation (id_profile , id_habilitation) VALUES
+(1, 1),
+(1, 2), 
+(1, 3),
+(1, 4),
+(2, 3),
+(2, 4),
+(3, 4);
+
+
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    id_profile INT,
+  --  active BOOLEAN NOT NULL DEFAULT TRUE,
+    FOREIGN KEY (id_profile) REFERENCES profiles(id)
+);
+
+
+-- INSERT INTO users (nom, email, id_profile, active) VALUES
+-- ('Alice', 'alice@example.com', 1, TRUE),
+-- ('Bob', 'bob@example.com', 2, TRUE),
+-- ('Charlie', 'charlie@example.com', 3, TRUE),
+-- ('David', 'david@example.com', 3, TRUE),
+-- ('Eve', 'eve@example.com', 3, TRUE);
+
+INSERT INTO users (nom, email, id_profile) VALUES
+('Alice', 'alice@example.com', 1),
+('Bob', 'bob@example.com', 2),
+('Charlie', 'charlie@example.com', 3),
+('David', 'david@example.com', 3),
+('Eve', 'eve@example.com', 3);
+
+
+

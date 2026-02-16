@@ -1,0 +1,20 @@
+# Composer
+/vendor/
+src/vendor/
+
+
+# PRADO runtime
+src/assets/
+src/protected/runtime/
+
+
+# Docker
+db_data/
+
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log

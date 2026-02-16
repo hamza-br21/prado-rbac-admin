@@ -1,0 +1,19 @@
+{
+    "name": "prado/example-app",
+    "description": "Exemple PRADO Framework avec Docker et MySQL",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "require": {
+        "pradosoft/prado": "^4.3"
+    },
+    "autoload": {
+        "classmap": [
+            "protected/database",
+            "protected/pages"
+        ]
+    }
+}

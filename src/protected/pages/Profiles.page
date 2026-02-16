@@ -1,0 +1,76 @@
+<com:TContent ID="MainContent">
+    <com:TForm>
+        <h1>Gestion des Profiles</h1>
+
+        <!-- Search Section -->
+        <div class="actions">
+            Rechercher : 
+            <com:TTextBox ID="SearchText" />
+            <com:TButton Text="Rechercher" OnClick="onSearch" CausesValidation="false" />
+            <com:TButton Text="Tout Afficher" OnClick="onResetSearch" CausesValidation="false" />
+        </div>
+
+        <!-- Profile List -->
+        <com:TDataGrid ID="ProfileGrid" 
+                       AutoGenerateColumns="false" 
+                       CssClass="datagrid"
+                       DataKeyField="id"
+                       OnDeleteCommand="onDelete"
+                       OnEditCommand="onEdit">
+            
+            <com:TBoundColumn DataField="id" HeaderText="ID" ReadOnly="true" />
+            <com:TBoundColumn DataField="label" HeaderText="Label" />
+            <com:TBoundColumn DataField="active" HeaderText="Active" />
+            
+            <com:TButtonColumn HeaderText="Actions"
+                               Text="Modifier"
+                               CommandName="edit"
+                               ButtonType="PushButton"
+                               CausesValidation="false" />
+            
+            <com:TTemplateColumn HeaderText="Supprimer">
+                <prop:ItemTemplate>
+                    <com:TButton Text="Supprimer" 
+                                 CommandName="delete"
+                                 Attributes.OnClick="if(!confirm('Êtes-vous sûr ?')) return false;"
+                                 CausesValidation="false" />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+        </com:TDataGrid>
+
+        <!-- Edit/Create Form -->
+        <div class="form-section">
+            <h3><com:TLabel ID="FormTitle" Text="Ajouter un Profile" /></h3>
+            
+            <com:THiddenField ID="ProfileId" />
+            
+            <div class="field">
+                <label>Label:</label>
+                <com:TTextBox ID="ProfileLabel" />
+                <com:TRequiredFieldValidator ControlToValidate="ProfileLabel" ErrorMessage="ProfileLabel est requis." />
+            </div>
+
+            <div class="field">
+                <label>Active:</label>
+                <com:TCheckBox ID="ProfileActive" />
+               
+            </div>
+
+           <div class="field">
+                <label>Habilitations :</label>
+                <com:TCheckBoxList ID="ProfileHabilitations"/>
+               
+            </div>
+
+            
+            <div class="actions">
+                <com:TButton ID="SaveBtn" Text="Enregistrer" OnClick="onSave" />
+                <com:TButton Text="Annuler" OnClick="onCancel" CausesValidation="false" />
+            </div>
+            
+            <com:TLabel ID="MessageLabel" ForeColor="red" />
+        </div>
+
+    </com:TForm>
+</com:TContent>
+
