@@ -5,6 +5,7 @@ use Prado\Web\UI\ActiveControls\TActiveRecord;
 Prado::using('Application.database.ProfileRecord'); 
 Prado::using('Application.database.HabilitationRecord'); 
 Prado::using('Application.database.ProfileHabilitationRecord');
+Prado::using('Application.database.UserRecord');
 
 class Profiles extends TPage
 {
@@ -60,8 +61,36 @@ class Profiles extends TPage
             $profile->label = $this->ProfileLabel->Text;
             $profile->active = $this->ProfileActive->Checked ? 1 : 0;
 
-            // 1. Sauvegarder l'objet principal (pour avoir l'ID)
-            $profile->save();
+              // 1. Sauvegarder l'objet principal (pour avoir l'ID)
+                                   $profile->save();
+
+            //if(!$profile->active){
+            //foreach($profile->users as $user){
+           // $user->active = FALSE;
+            //}
+           // } s'amarche pas
+
+           $isActive = $profile->active;
+
+
+
+           if($isActive == FALSE){
+          $usersToDesactive = UserRecord::finder()->findAll('id_profile = ?',$profile->id);
+
+          foreach($usersToDesactive as $user){
+             $user->active = FALSE;
+             $user->save();
+          }
+
+      $deactivatedCount =  count($usersToDesactive);
+
+           }
+
+
+
+
+
+
 
             // 2. Récupérer les IDs sélectionnés depuis le TCheckBoxList
             $selectedIds = $this->ProfileHabilitations->SelectedValues;
@@ -109,7 +138,15 @@ class Profiles extends TPage
 
             $this->resetForm();
             $this->bindGrid($this->SearchText->Text);
-            $this->MessageLabel->Text = "Profil enregistré avec succès.";
+
+              $message = "Profil enregistré avec succès.";
+
+            if(isset($deactivatedCount) && $deactivatedCount > 0 ){
+
+            $message .= "($deactivatedCount} utilisateur(s) désactivé(s))";
+
+            }
+            $this->MessageLabel->Text =   $message;
             $this->MessageLabel->ForeColor = "green";
 
         } catch (\Exception $e) {
@@ -120,7 +157,7 @@ class Profiles extends TPage
 }
     public function onEdit($sender, $param)
     {
-        // Get the primary key (ID) from the row that triggered the command
+       
         $id = $this->ProfileGrid->DataKeys[$param->Item->ItemIndex];
         
         $profile = ProfileRecord::finder()->findByPk($id);
@@ -149,7 +186,7 @@ class Profiles extends TPage
          $profile = ProfileRecord::finder()->findByPk($id);
          if ($profile) {
              if (count($profile->users) > 0 || count($profile->habilitations) > 0) {
-                 $this->MessageLabel->Text = "Impossible de supprimer ce profil car il est associé à des utilisateurs.";
+                 $this->MessageLabel->Text = "Impossible de supprimer ce profil car il est associé à des utilisateurs ou des habilitations.";
                  $this->MessageLabel->ForeColor = "red";
              } else {
                  $profile->delete();

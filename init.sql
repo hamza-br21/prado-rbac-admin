@@ -56,24 +56,26 @@ CREATE TABLE IF NOT EXISTS users (
     nom VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     id_profile INT,
-  --  active BOOLEAN NOT NULL DEFAULT TRUE,
+    active BOOLEAN NOT NULL DEFAULT TRUE,
     FOREIGN KEY (id_profile) REFERENCES profiles(id)
 );
 
 
--- INSERT INTO users (nom, email, id_profile, active) VALUES
--- ('Alice', 'alice@example.com', 1, TRUE),
--- ('Bob', 'bob@example.com', 2, TRUE),
--- ('Charlie', 'charlie@example.com', 3, TRUE),
--- ('David', 'david@example.com', 3, TRUE),
--- ('Eve', 'eve@example.com', 3, TRUE);
 
-INSERT INTO users (nom, email, id_profile) VALUES
-('Alice', 'alice@example.com', 1),
-('Bob', 'bob@example.com', 2),
-('Charlie', 'charlie@example.com', 3),
-('David', 'david@example.com', 3),
-('Eve', 'eve@example.com', 3);
+INSERT INTO users (nom, email, id_profile, active) VALUES
+('Alice', 'alice@example.com', 1, TRUE),
+('Bob', 'bob@example.com', 2, TRUE),
+('Charlie', 'charlie@example.com', 3, TRUE),
+('David', 'david@example.com', 3, TRUE),
+('Eve', 'eve@example.com', 3, TRUE),
+('Frank', 'frank@example.com', 3, TRUE),
+('Grace', 'grace@example.com', 3, TRUE),
+('Heidi', 'heidi@example.com', 3, TRUE),
+('Ivan', 'ivan@example.com', 3, TRUE),
+('Judy', 'judy@example.com', 3, TRUE),
+('Karl', 'karl@example.com', 3, TRUE),
+('Leo', 'leo@example.com', 3, TRUE);
+
 
 
 

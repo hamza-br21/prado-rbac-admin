@@ -28,6 +28,8 @@
                     <%# $this->Page->getUserHabilitations($this->Parent->Data) %>
                 </prop:ItemTemplate>
             </com:TTemplateColumn>
+
+             <com:TBoundColumn DataField="active" HeaderText="Active" />
             
             <com:TButtonColumn HeaderText="Actions"
                                Text="Modifier"
@@ -62,6 +64,12 @@
                 <com:TTextBox ID="UserEmail" />
                 <com:TRequiredFieldValidator ControlToValidate="UserEmail" ErrorMessage="L'email est requis." />
                 <com:TEmailAddressValidator ControlToValidate="UserEmail" ErrorMessage="Email invalide." />
+            </div>
+
+              <div class="field">
+                <label>Active:</label>
+                <com:TCheckBox ID="UserActive" />
+               
             </div>
 
             

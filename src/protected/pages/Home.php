@@ -1,6 +1,7 @@
 <?php
 use Prado\Web\UI\TPage;
 use Prado\Web\UI\ActiveControls\TActiveRecord; // Ensure TActiveRecord is imported if needed, usually global or via namespace
+use Symfony\Component\VarDumper\Cloner\Data;
 
 Prado::using('Application.database.ProfileRecord');
 Prado::using('Application.database.UserRecord');
@@ -31,14 +32,18 @@ class Home extends TPage
             $criteria->Condition = 'nom LIKE :search OR email LIKE :search';
             $criteria->Parameters[':search'] = '%' . trim($search) . '%';
         }
+     $data = UserRecord::finder()->findAll($criteria);
 
-       $data = UserRecord::finder()->findAll($criteria);
-        // --- DEBUG ICI ---
-  //  echo "<pre>";
-    //var_dump($data); 
-    //echo "</pre>";
-    //die(); 
-    // -----------------
+    // $data = [];
+    //foreach(UserRecord::finder()->findAll() as $user){
+    // if(!$user->profil->active){
+      //$user->active = FALSE;
+     //}
+//$data[] = $user;
+//}  s'amarche pas
+
+    //    var_dump($data); 
+    //    die();
         
         $this->UserGrid->DataSource =  $data ;
         $this->UserGrid->dataBind();
@@ -62,18 +67,31 @@ class Home extends TPage
             $user = null;
 
             if (!empty($id)) {
-                // Update
+                
                 $user = UserRecord::finder()->findByPk($id);
             }
 
             if ($user === null) {
-                // Create
+    
                 $user = new UserRecord;
             }
 
             $user->nom = $this->UserNom->Text;
             $user->email = $this->UserEmail->Text;
-            $user->id_profile = $this->UserProfile->SelectedValue;
+            $user->active = $this->UserActive->Checked ? 1 : 0;
+
+            $selectedProfileId = $this->UserProfile->SelectedValue;
+
+
+       if (empty($selectedProfileId)) {
+         $this->MessageLabel->Text = "Erreur : Vous devez sélectionner un profil. Veuillez d'abord activer un profil dans la page Profils.";
+         $this->MessageLabel->ForeColor = "red";
+                            return;
+                        }
+
+                     $user->id_profile = $this->UserProfile->SelectedValue;
+
+            
 
             try {
                 $user->save();
@@ -90,7 +108,7 @@ class Home extends TPage
 
     public function onEdit($sender, $param)
     {
-        // Get the primary key (ID) from the row that triggered the command
+     
         $id = $this->UserGrid->DataKeys[$param->Item->ItemIndex];
         
         $user = UserRecord::finder()->findByPk($id);
@@ -98,6 +116,7 @@ class Home extends TPage
             $this->UserId->Value = $user->id;
             $this->UserNom->Text = $user->nom;
             $this->UserEmail->Text = $user->email;
+           $this->UserActive->Checked = $user->active ? 1 : 0;
             $this->UserProfile->SelectedValue = $user->id_profile;
             
             $this->FormTitle->Text = "Modifier l'utilisateur ID: " . $user->id;
@@ -108,9 +127,20 @@ class Home extends TPage
     public function onDelete($sender, $param)
     {
         $id = $this->UserGrid->DataKeys[$param->Item->ItemIndex];
-        UserRecord::finder()->deleteByPk($id);
-        $this->bindGrid($this->SearchText->Text);
-        $this->resetForm(); // Reset form if we deleted the currently edited user
+        $user = UserRecord::finder()->findByPk($id);
+        if($user){
+
+          if($user->profile && $user->profile->habilitations && count($user->profile->habilitations) > 0){
+            $this->MessageLabel->Text = "Impossible de supprimer l'utilisateur car son profil est associé à des habilitations.";
+            $this->MessageLabel->ForeColor = "red";
+            return;
+          }else {
+            $user->delete();
+            $this->bindGrid($this->SearchText->Text);
+            $this->resetForm(); // Reset form if we deleted the currently edited user
+          }
+        }
+        
     }
 
     public function onCancel($sender, $param)

@@ -8,6 +8,7 @@ class UserRecord extends TActiveRecord
     public $id;
     public $nom;
     public $email;
+    public $active; 
     
    //j'ai ajouté un champ id_profile pour stocker le profil user
     public $id_profile;
