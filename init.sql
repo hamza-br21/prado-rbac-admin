@@ -82,12 +82,13 @@ INSERT INTO users (nom, email, id_profile, active) VALUES
 ('ilyass', 'ilyass@example.com', 3, TRUE),
 ('faissal', 'faissal@example.com', 3, TRUE),
 ('oussama', 'oussama@example.com', 2, TRUE),
-('soufiane', 'soufiane@example.com', 3, TRUE),
+('mohamed', 'mohamed@example.com', 2, TRUE),
+('soufiane', 'soufiane@example.com', 2, TRUE),
 ('fatimazahra', 'fatimazahra@example.com', 3, TRUE),
 ('donia', 'donia@example.com', 3, TRUE),
-('douae', 'douae@example.com', 2, TRUE),
-('akram', 'akrame@example.com', 3, TRUE),
-('ayoub', 'ayoub@example.com', 3, TRUE),
+('douae', 'douae@example.com', 3, TRUE),
+('akram', 'akrame@example.com', 2, TRUE),
+('ayoub', 'ayoub@example.com', 2, TRUE),
 ('aissam', 'aissam@example.com', 3, TRUE);
 
 

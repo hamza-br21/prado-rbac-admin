@@ -113,7 +113,6 @@ input[type="submit"], button {
     padding: 8px 14px;
     border: none;
     border-radius: 6px;
-    background-color: #2563eb;
     color: white;
     cursor: pointer;
     transition: 0.2s;
@@ -222,6 +221,15 @@ footer {
 .btn-search:hover {
     background-color: #4338ca;
 }
+
+.btn {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
 
 
 

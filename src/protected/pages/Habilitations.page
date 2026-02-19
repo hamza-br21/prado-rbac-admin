@@ -6,8 +6,10 @@
         <div class="actions">
             Rechercher : 
             <com:TTextBox ID="SearchText" />
-            <com:TButton Text="Rechercher" OnClick="onSearch" CausesValidation="false" />
-            <com:TButton Text="Tout Afficher" OnClick="onResetSearch" CausesValidation="false" />
+
+            <com:TButton Text="Rechercher" CssClass="btn btn-search" OnClick="onSearch" CausesValidation="false" />
+            <com:TButton Text="Tout Afficher" CssClass="btn btn-cancel" OnClick="onResetSearch" CausesValidation="false" />
+            
         </div>
 
         <!-- habilitation List -->
@@ -15,6 +17,12 @@
                        AutoGenerateColumns="false" 
                        CssClass="datagrid"
                        DataKeyField="id"
+                       AllowPaging="true"
+                        PageSize="5"
+                        PagerStyle.Mode="Numeric"
+                        PagerStyle.Position="Bottom"
+                        PagerStyle.CssClass="grid-pager"
+                        OnPageIndexChanged="changePage"
                        OnDeleteCommand="onDelete"
                        OnEditCommand="onEdit">
             
@@ -22,20 +30,27 @@
             <com:TBoundColumn DataField="label" HeaderText="Label" />
             <com:TBoundColumn DataField="active" HeaderText="Active" />
             
-            <com:TButtonColumn HeaderText="Actions"
-                               Text="Modifier"
-                               CommandName="edit"
-                               ButtonType="PushButton"
-                               CausesValidation="false" />
-            
-            <com:TTemplateColumn HeaderText="Supprimer">
-                <prop:ItemTemplate>
-                    <com:TButton Text="Supprimer" 
-                                 CommandName="delete"
-                                 Attributes.OnClick="if(!confirm('Êtes-vous sûr ?')) return false;"
-                                 CausesValidation="false" />
-                </prop:ItemTemplate>
-            </com:TTemplateColumn>
+            <com:TTemplateColumn HeaderText="Modifier">
+                    <prop:ItemTemplate>
+                        <com:TButton 
+                            Text="Modifier"
+                            CommandName="edit"
+                            CssClass="btn btn-edit"
+                            CausesValidation="false" />
+                    </prop:ItemTemplate>
+                 </com:TTemplateColumn>
+
+
+                        <com:TTemplateColumn HeaderText="Supprimer">
+                            <prop:ItemTemplate>
+                                <com:TButton 
+                                    Text="Supprimer"
+                                    CommandName="delete"
+                                    CssClass="btn btn-delete"
+                                    Attributes.OnClick="if(!confirm('Êtes-vous sûr ?')) return false;"
+                                    CausesValidation="false" />
+                            </prop:ItemTemplate>
+                          </com:TTemplateColumn>
         </com:TDataGrid>
 
         <!-- Edit/Create Form -->
@@ -57,8 +72,8 @@
             </div>
             
             <div class="actions">
-                <com:TButton ID="SaveBtn" Text="Enregistrer" OnClick="onSave" />
-                <com:TButton Text="Annuler" OnClick="onCancel" CausesValidation="false" />
+                <com:TButton ID="SaveBtn" Text="Enregistrer"  CssClass="btn btn-save" OnClick="onSave" />
+                <com:TButton Text="Annuler" OnClick="onCancel" CssClass="btn btn-cancel" CausesValidation="false" />
             </div>
             
             <com:TLabel ID="MessageLabel" ForeColor="red" />
