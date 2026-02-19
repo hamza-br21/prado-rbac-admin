@@ -74,7 +74,25 @@ INSERT INTO users (nom, email, id_profile, active) VALUES
 ('Ivan', 'ivan@example.com', 3, TRUE),
 ('Judy', 'judy@example.com', 3, TRUE),
 ('Karl', 'karl@example.com', 3, TRUE),
-('Leo', 'leo@example.com', 3, TRUE);
+('Leo', 'leo@example.com', 3, TRUE),
+('hamza', 'hamza@example.com', 3, TRUE),
+('khalid', 'khalid@example.com', 3, TRUE),
+('othmane', 'othmane@example.com', 3, TRUE),
+('abderrafia', 'abderrafia@example.com', 3, TRUE),
+('ilyass', 'ilyass@example.com', 3, TRUE),
+('faissal', 'faissal@example.com', 3, TRUE),
+('oussama', 'oussama@example.com', 2, TRUE),
+('soufiane', 'soufiane@example.com', 3, TRUE),
+('fatimazahra', 'fatimazahra@example.com', 3, TRUE),
+('donia', 'donia@example.com', 3, TRUE),
+('douae', 'douae@example.com', 2, TRUE),
+('akram', 'akrame@example.com', 3, TRUE),
+('ayoub', 'ayoub@example.com', 3, TRUE),
+('aissam', 'aissam@example.com', 3, TRUE);
+
+
+
+
 
 
 

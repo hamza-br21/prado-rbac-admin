@@ -11,12 +11,20 @@
         </div>
 
         <!-- User List -->
+       
+
         <com:TDataGrid ID="UserGrid" 
-                       AutoGenerateColumns="false" 
-                       CssClass="datagrid"
-                       DataKeyField="id"
-                       OnDeleteCommand="onDelete"
-                       OnEditCommand="onEdit">
+           AutoGenerateColumns="false"
+             CssClass="datagrid"
+             DataKeyField="id"
+             AllowPaging="true"
+             PageSize="5"
+             PagerStyle.Mode="Numeric"
+             PagerStyle.Position="Bottom"
+             PagerStyle.CssClass="grid-pager"
+             OnPageIndexChanged="changePage"
+             OnDeleteCommand="onDelete"
+             OnEditCommand="onEdit">
             
             <com:TBoundColumn DataField="id" HeaderText="ID" ReadOnly="true" />
             <com:TBoundColumn DataField="nom" HeaderText="Nom" />
@@ -36,6 +44,7 @@
                                CommandName="edit"
                                ButtonType="PushButton"
                                CausesValidation="false" />
+                               
             
             <com:TTemplateColumn HeaderText="Supprimer">
                 <prop:ItemTemplate>
@@ -46,6 +55,10 @@
                 </prop:ItemTemplate>
             </com:TTemplateColumn>
         </com:TDataGrid>
+
+  
+
+
 
         <!-- Edit/Create Form -->
         <div class="form-section">
@@ -86,4 +99,6 @@
         </div>
 
     </com:TForm>
+
+
 </com:TContent>

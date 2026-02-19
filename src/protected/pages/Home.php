@@ -44,9 +44,26 @@ class Home extends TPage
 
     //    var_dump($data); 
     //    die();
-        
+
+
         $this->UserGrid->DataSource =  $data ;
         $this->UserGrid->dataBind();
+
+
+        //je vais ajouter la pagination
+
+        // $pagedData = new TPagedDataSource();
+
+        // $pagedData->DataSource = $data;
+        // $pagedData->PageSize = 5;
+        //   $pagedData->CurrentPageIndex = isset($_GET['page']) ? (int)$_GET['page'] : 0;
+        // $pagedData->AllowPaging = TRUE;
+
+        // $this->UserGrid->DataSource =  $pagedData ;
+        // $this->UserGrid->dataBind();
+
+
+
     }
 
     public function onSearch($sender, $param)
@@ -170,5 +187,11 @@ class Home extends TPage
         }
         return '';
     }
+
+    public function changePage($sender, $param)
+{
+    $this->UserGrid->CurrentPageIndex = $param->NewPageIndex;
+    $this->bindGrid($this->SearchText->Text);
+}
         
 }
